@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Input Data</title>
+</head>
+<body>
+
+    <h2>Form Input</h2>
+
+    <form action="input.php" onsubmit="return validateForm(event)" method="post">
+        <label for="kec">Kecamatan:</label><br>
+        <input type="text" id="kec" name="kecamatan" value=""><br>
+
+        <label for="long">Longitude:</label><br>
+        <input type="text" id="long" name="longitude" value=""><br>
+
+        <label for="lat">Latitude:</label><br>
+        <input type="text" id="lat" name="latitude" value=""><br>
+
+        <label for="luas">Luas:</label><br>
+        <input type="text" id="luas" name="luas" value=""><br>
+
+        <label for="jml_ppdk">Jumlah Penduduk:</label><br>
+        <input type="text" id="jml_ppdk" name="jumlah_penduduk" value=""><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    
+    <p id="informasi" style="color: red; font-weight: bold;"></p>
+
+<script>
+function validateForm(event) {
+    let kec = document.getElementById("kec").value.trim();
+    let long = document.getElementById("long").value.trim();
+    let lat = document.getElementById("lat").value.trim();
+    let luas = document.getElementById("luas").value.trim();
+    let jml = document.getElementById("jml_ppdk").value.trim();
+    
+    let text = "";
+
+    // 1. Validasi Kecamatan (Tidak boleh kosong)
+    if (kec === "") {
+        text = "Nama Kecamatan tidak boleh kosong!";
+    }
+    // 2. Validasi Longitude (Harus angka)
+    else if (long === "" || isNaN(long)) {
+        text = "Longitude harus berupa angka yang valid!";
+    }
+    // 3. Validasi Latitude (Harus angka)
+    else if (lat === "" || isNaN(lat)) {
+        text = "Latitude harus berupa angka yang valid!";
+    }
+    // 4. Validasi Luas (Harus angka dan tidak boleh < 1 atau negatif)
+    else if (luas === "" || isNaN(luas) || parseFloat(luas) < 1) {
+        text = "Data luas harus angka dan tidak boleh bernilai negatif atau kurang dari 1!";
+    }
+    // 5. Validasi Jumlah Penduduk (Harus angka bulat positif)
+    else if (jml === "" || isNaN(jml) || parseInt(jml) < 0) {
+        text = "Jumlah penduduk harus berupa angka dan tidak boleh bernilai negatif!";
+    }
+
+    // Jika ada pesan error, batalkan pengiriman form
+    if (text !== "") {
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+    
+    document.getElementById("informasi").innerHTML = "";
+    return true;
+}
+</script>
+
+</body>
+</html>
